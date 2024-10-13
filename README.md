@@ -1,4 +1,4 @@
-# retail_iot_project_stream_databricks_azure
+# Retail_IOT_Project_Stream_Databricks_Azure
 
 our solution for Real-Time Retail-Margin-Improvement Analytics to improve in-store operations by:  
 
@@ -8,8 +8,9 @@ our solution for Real-Time Retail-Margin-Improvement Analytics to improve in-sto
 
 -Leveraging real-time insights to tackle your most pressing in-store information needs. 
 
-                                  Project Architecture
-<img width="659" alt="image" src="https://github.com/user-attachments/assets/8548015f-0215-449a-b95f-99eec50409e1">
+                                 # Project Architecture
+              <img width="629" alt="image" src="https://github.com/user-attachments/assets/be1ae1e9-b6ad-433d-b4c9-b7196c58d7b9">
+
 
  
 
