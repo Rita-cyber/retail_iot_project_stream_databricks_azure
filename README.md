@@ -38,7 +38,7 @@ In the first step, which is called Bronze-to-Silver ETL in the diagram, ingested
 
 Using the silver tables, we derive our business-aligned output and computed current-state inventory in the second stage (shown in the figure as Silver-to-Gold ETL). Our architecture's Gold layer is represented by the table to which these data are written. 
 
-Simulated Files:
+Blob Storage Account(Simulated Files):
 | File Type    | Files                                 |  Path                                                                       |
 |--------------|---------------------------------------|-----------------------------------------------------------------------------|
 | Change_Event|inventory_change_store001.txt           | /mnt/pcupos/pos/generator/inventory_change_store001.txt                     |
@@ -73,11 +73,7 @@ Retrieve an Account Access Key & Connection String.
 
 Set Azure Storage Account relevant configuration values in the cell below. You can set up a secret scope to manage credentials used in notebooks. 
 
- 
-
 Create below containers or folders 
-
- 
 
 Container:- 
 
@@ -134,5 +130,42 @@ change_type_schema = StructType([
   ]) 
 
   
+Step 4 In a table, load the Kafka data and persist. 
+Now let's look at the data from our inventory change event. These are the contents of a JSON document that a retailer sent out summarizing an occurrence that was relevant to the inventory. These occurrences could be sales, restocks, or reports of theft, damage, or loss (shrinkage). Bopis, the fourth event category, denotes a sales transaction that occurs in the online store but is handled by a physical store. Each of these occurrences is sent as a single, combined stream: 
+
+We create a function that returns a Spark dataframe in the same manner as before, then add the necessary components to it. Using patterns from Spark Structured Streaming, the dataframe is defined. The reason we configure the connection using Kafka attributes is that the dataframe is streaming data from the Azure IOT Hub's Kafka endpoint. The dataframe that is read from the IOT Hub has a pre-defined structure because it is a Kafka data source, meaning that no schema needs to be added. To ensure that we don't use up all of the resources allocated for stream processing, the maxOffsetsPerTrigger configuration parameter caps the amount of messages read from the IOT Hub in a single cycle and create inventory_change table. 
+
+Step 5: Snapshots of the Stream Inventory 
+We get counts of the inventory items at a specific store location on a regular basis. Retailers often use these inventory snapshots to refresh their knowledge of what products are truly in stock, especially in light of questions over the accuracy of computed inventory amounts. We might want to hold onto the most recent counts for every product at every store location as well as the complete history of inventory snapshots that we have received. As soon as this one data source enters our environment, two different tables are created from it to satisfy this requirement. 
+
+These inventory snapshot data are a little erratic in arriving in this context as CSV files. However, we will want to process them as soon as they arrive so that they may be used to support estimations that are more accurate.However, as soon as they land, we'll want to process them and make them accessible so that we can enable more precise estimations of the existing inventory. 
+
+Step 6: copy all files in blob storage to azure adls gen 2
+Use Azure Data Factory (ADF) to copy all files from Azure Blob Storage to Azure Data Lake Storage Gen2 by following these steps:
+
+Create a Pipeline in ADF: To control the flow of data, create a new pipeline.
+
+ForEach Activity: To go across every folder in the Blob Storage, use this. The list of directories is iterated over in this activity.
+<img width="527" alt="image" src="https://github.com/user-attachments/assets/12db9122-89d0-4bf4-9078-96285ed9b3be">
+
+<img width="522" alt="image" src="https://github.com/user-attachments/assets/c60b2911-436d-4f56-ab3f-91d8a1b38f99">
+
+
+
+Copy Activity: Place the Copy Activity inside each of the activities. Set it up to copy files to the ADLS Gen2 destination from the Blob Storage folder.
+
+<img width="524" alt="image" src="https://github.com/user-attachments/assets/98544f96-83b9-4249-bbb0-bdc0172c6950">
+
+
+Source Dataset: Configure the dataset's source to point to Blob Storage. For each cycle, use dynamic expressions to fetch files.
+
+Sink Dataset: Assign the ADLS Gen2 location to the sink dataset.
+
+Triggers: Arrange for the pipeline to be triggered as needed
+
+This technique automates the mass copying of files across cloud storage platforms by utilizing ADF's intuitive loop through directory support and handling of numerous datasets.
+
+<img width="647" alt="image" src="https://github.com/user-attachments/assets/dc1417ad-f2dc-4168-8f29-0a93e44751d5">
+
 
  
