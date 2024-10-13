@@ -8,7 +8,7 @@ our solution for Real-Time Retail-Margin-Improvement Analytics to improve in-sto
 
 -Leveraging real-time insights to tackle your most pressing in-store information needs. 
 
-                                  Project Architecture
+## Project Architecture
 <img width="629" alt="image" src="https://github.com/user-attachments/assets/be1ae1e9-b6ad-433d-b4c9-b7196c58d7b9">
 
 
@@ -38,7 +38,7 @@ In the first step, which is called Bronze-to-Silver ETL in the diagram, ingested
 
 Using the silver tables, we derive our business-aligned output and computed current-state inventory in the second stage (shown in the figure as Silver-to-Gold ETL). Our architecture's Gold layer is represented by the table to which these data are written. 
 
-Blob Storage Account(Simulated Files):
+### Blob Storage Account(Simulated Files):
 | File Type    | Files                                 |  Path                                                                       |
 |--------------|---------------------------------------|-----------------------------------------------------------------------------|
 | Change_Event|inventory_change_store001.txt           | /mnt/pcupos/pos/generator/inventory_change_store001.txt                     |
@@ -49,7 +49,7 @@ Blob Storage Account(Simulated Files):
 | Static      |item.txt                                | /mnt/pcupos/pos/static_data/item.txt                                        |
 | Static      |inventory_change_type.txt               | /mnt/pcupos/pos/static_data/inventory_change_type.txt                       |
 
-Step 1a: Setup the Azure IOT Hub 
+#### Step 1a: Setup the Azure IOT Hub 
 
 To setup and configure the Azure IOT Hub, you will need to: 
 
@@ -61,7 +61,7 @@ Retrieve the Azure IOT Hub's Event Hub Endpoint Compatible Endpoint property.
 
 Set Azure IOT Hub relevant configuration values in the notebook. You can set up a secret scope to manage credentials used in notebooks. 
 
-Step 1b: Setup the Azure Storage Account 
+##### Step 1b: Setup the Azure Storage Account 
 
 To setup and configure the Azure Storage account, you will need to: 
 
@@ -87,7 +87,7 @@ pos/static_data
 
 pos/inventory_snapshots 
 
- Step3:- Load the Static Reference Data 
+###### Step2:- Load the Static Reference Data 
 
 While we've given attention in this and other notebooks to the fact that we are receiving streaming event data and periodic snapshots, we also have reference data we need to access. These data are relatively stable so that we might update them just once daily. 
 
@@ -130,17 +130,17 @@ change_type_schema = StructType([
   ]) 
 
   
-Step 4 In a table, load the Kafka data and persist. 
+###### Step 3 In a table, load the Kafka data and persist. 
 Now let's look at the data from our inventory change event. These are the contents of a JSON document that a retailer sent out summarizing an occurrence that was relevant to the inventory. These occurrences could be sales, restocks, or reports of theft, damage, or loss (shrinkage). Bopis, the fourth event category, denotes a sales transaction that occurs in the online store but is handled by a physical store. Each of these occurrences is sent as a single, combined stream: 
 
 We create a function that returns a Spark dataframe in the same manner as before, then add the necessary components to it. Using patterns from Spark Structured Streaming, the dataframe is defined. The reason we configure the connection using Kafka attributes is that the dataframe is streaming data from the Azure IOT Hub's Kafka endpoint. The dataframe that is read from the IOT Hub has a pre-defined structure because it is a Kafka data source, meaning that no schema needs to be added. To ensure that we don't use up all of the resources allocated for stream processing, the maxOffsetsPerTrigger configuration parameter caps the amount of messages read from the IOT Hub in a single cycle and create inventory_change table. 
 
-Step 5: Snapshots of the Stream Inventory 
+##### Step 4: Snapshots of the Stream Inventory 
 We get counts of the inventory items at a specific store location on a regular basis. Retailers often use these inventory snapshots to refresh their knowledge of what products are truly in stock, especially in light of questions over the accuracy of computed inventory amounts. We might want to hold onto the most recent counts for every product at every store location as well as the complete history of inventory snapshots that we have received. As soon as this one data source enters our environment, two different tables are created from it to satisfy this requirement. 
 
 These inventory snapshot data are a little erratic in arriving in this context as CSV files. However, we will want to process them as soon as they arrive so that they may be used to support estimations that are more accurate.However, as soon as they land, we'll want to process them and make them accessible so that we can enable more precise estimations of the existing inventory. 
 
-Step 6: copy all files in blob storage to azure adls gen 2
+##### Step 5: copy all files in blob storage to azure adls gen 2
 Use Azure Data Factory (ADF) to copy all files from Azure Blob Storage to Azure Data Lake Storage Gen2 by following these steps:
 
 Create a Pipeline in ADF: To control the flow of data, create a new pipeline.
