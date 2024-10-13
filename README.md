@@ -39,8 +39,8 @@ Simulated Files:
 |--------------|---------------------------------------|-----------------------------------------------------------------------------|
 | Change_Event|inventory_change_store001.txt           | /mnt/pcupos/pos/generator/inventory_change_store001.txt                     |
 | Change_Event|inventory_change_online.txt             | /mnt/pcupos/pos/generator/inventory_change_online.txt                       |
-| Snapshot    |inventory_snapshot_0_2021-01-01 00:00:00| /mnt/pcupos/pos/inventor_snapshots/inventory_snapshot_0_2021-01-01 00:00:00 |
-| Snapshot    |inventory_snapshot_1_2021-01-01 00:00:00| /mnt/pcupos/pos/inventor_snapshots/inventory_snapshot_1_2021-01-01 00:00:00 |
+| Snapshot    |inventory_snapshot_store001.txt         | /mnt/pcupos/pos/generator/inventory_snapshot_store001.txt                   |
+| Snapshot    |inventory_snapshot_online.txt           | /mnt/pcupos/pos/generator/inventory_snapshot_online.txt                     |
 | Static      |store.txt                               | /mnt/pcupos/pos/static_data/store.txt                                       |
 | Static      |item.txt                                | /mnt/pcupos/pos/static_data/item.txt                                        |
 | Static      |inventory_change_type.txt               | /mnt/pcupos/pos/static_data/inventory_change_type.txt                       |
