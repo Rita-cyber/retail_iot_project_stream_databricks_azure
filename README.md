@@ -9,7 +9,7 @@ our solution for Real-Time Retail-Margin-Improvement Analytics to improve in-sto
 -Leveraging real-time insights to tackle your most pressing in-store information needs. 
 
                                  # Project Architecture
-              <img width="629" alt="image" src="https://github.com/user-attachments/assets/be1ae1e9-b6ad-433d-b4c9-b7196c58d7b9">
+<img width="629" alt="image" src="https://github.com/user-attachments/assets/be1ae1e9-b6ad-433d-b4c9-b7196c58d7b9">
 
 
  
