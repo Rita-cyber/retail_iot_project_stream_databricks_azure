@@ -94,40 +94,29 @@ While we've given attention in this and other notebooks to the fact that we are 
  
 
 Store 
-
-Schema:- store_schema = StructType([ 
-
-  StructField('store_id', IntegerType()), 
-
-  StructField('name', StringType()) 
-
-  ]) 
-
+| Column Name    | Data Type             |     
+|--------------|-------------------------|
+| store_id     |Integer                  | 
+| name         |String                   | 
  
 
 Items 
+| Column Name            | Data Type               |     
+|------------------------|-------------------------|
+| item_id                |Integer                  | 
+| name                   |String                   | 
+| supplier_id            |Integer                  | 
+| safety_stock_quantity  |String                   | 
 
-item_schema = StructType([ 
 
-  StructField('item_id', IntegerType()), 
-
-  StructField('name', StringType()), 
-
-  StructField('supplier_id', IntegerType()), 
-
-  StructField('safety_stock_quantity', IntegerType()) 
-
-  ]) 
 
 Change_type 
 
-change_type_schema = StructType([ 
+| Column Name        | Data Type               |     
+|--------------------|-------------------------|
+| change_type_id     |Integer                  | 
+| change_type        |String                   | 
 
-  StructField('change_type_id', IntegerType()), 
-
-  StructField('change_type', StringType()) 
-
-  ]) 
 
   
 ###### Step 3 In a table, load the Kafka data and persist. 
