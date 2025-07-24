@@ -56,11 +56,11 @@ from pyspark.sql.types import *
 #@dlt.expect_or_fail("valid_date", F.col("order_timestamp") > "2021-01-01")
 def read_IOT_device():
    # Set the IoT Hub Event Hub-compatible endpoint details
-    event_hub_ns = "iothub-ns-pcudeviot-56206734-9931112468" #
+    event_hub_ns = " " #
     #TOPIC = "$Default"
-    TOPIC = "pcudeviot" # The name of the IOT HUB created under IOT HUB
-    #connection_string = """HostName=pcudeviothub.azure-devices.net;SharedAccessKeyName=iothubowner;#SharedAccessKey=CqkJgCXIXarB7zYFzcmnMSj0EpfOmbtTgAIoTJHtczc="""
-    connection_string = """Endpoint=sb://iothub-ns-pcudeviot-56206734-9931112468.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=WkB3/GaHOma/NZEo+Bebytgsip0ZabmysAIoTNEyqoo=;EntityPath=pcudeviot""" # # This is the event hub compatible endpoint property of the iot hub created in azure iot hub(under Hub settings);just click on the build-in end points created to retreive various information including the event hub compatible endpoint inputed here.
+    TOPIC = "p" # The name of the IOT HUB created under IOT HUB
+    #connection_string = """nnnnnn"""
+    connection_string = """nnnnnn""" # # This is the event hub compatible endpoint property of the iot hub created in azure iot hub(under Hub settings);just click on the build-in end points created to retreive various information including the event hub compatible endpoint inputed here.
     BOOTSTRAP_SERVERS = f"{event_hub_ns}.servicebus.windows.net:9093"
     EH_SASL = f"kafkashaded.org.apache.kafka.common.security.plain.PlainLoginModule required username=\"$ConnectionString\" password=\"{connection_string};\";"
 
